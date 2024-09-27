@@ -1,4 +1,4 @@
-# Lama Dev School Management Dashboard
+#Zeshan School Managment App
 
 ## Getting Started
 
