@@ -3,6 +3,9 @@ import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
 import { role, studentsData } from "@/lib/data";
+import prisma from "@/lib/prisma";
+import { ITEMS_PER_PAGE } from "@/lib/settings";
+import { Prisma } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -88,12 +91,49 @@ const renderRow = (item: Student) => (
     </td>
   </tr>
 );
-const StudentListPage = ({
+const StudentListPage = async ({
   searchParams,
 }: {
   searchParams: { [key: string]: string } | undefined;
 }) => {
   const { page, ...queryParams } = searchParams;
+
+  const p = page ? parseInt(page) : 1;
+
+  // URL PARAMS CONDITION
+
+  const query: Prisma.TeacherWhereInput = {};
+
+  if (queryParams) {
+    for (const [key, value] of Object.entries(queryParams)) {
+      if (value !== undefined) {
+        switch (key) {
+          case "classId":
+            query.lessons = {
+              some: {
+                classId: parseInt(value),
+              },
+            };
+            break;
+          case "search":
+            query.name = { contains: value, mode: "insensitive" };
+            break;
+          default:
+            break;
+        }
+      }
+    }
+  }
+
+  const [data, count] = await prisma.$transaction([
+    prisma.teacher.findMany({
+      where: query,
+      include: { subjects: true, classes: true },
+      take: ITEMS_PER_PAGE,
+      skip: (p - 1) * ITEMS_PER_PAGE,
+    }),
+    prisma.teacher.count({ where: query }),
+  ]);
   return (
     <div className="bg-white p-4 rounded-md flex-1 m-4 mt-0">
       {/* TOP */}
@@ -120,7 +160,7 @@ const StudentListPage = ({
       {/* LIST */}
       <Table columns={columns} renderRow={renderRow} data={studentsData} />
       {/* PAGINATION */}
-      <Pagination />
+      <Pagination page={p} count={count} />
     </div>
   );
 };
