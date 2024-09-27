@@ -52,7 +52,7 @@ const renderRow = (item: StudentList) => (
         alt=""
         width={40}
         height={40}
-        className="md:hidden xl:block w-10 h-10 rounded-full object-cover"
+        className="md:hidden xl:block w-10 h-10 rounded-full object-cover full"
       />
       <div className="flex flex-col">
         <h3 className="font-semibold">{item.name}</h3>
