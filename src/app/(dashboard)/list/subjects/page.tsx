@@ -1,12 +1,13 @@
-import FormContainer from "@/components/FormContainer";
+// import FormContainer from "@/components/FormContainer";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
+import { role } from "@/lib/data";
 import prisma from "@/lib/prisma";
-import { ITEM_PER_PAGE } from "@/lib/settings";
+import { ITEMS_PER_PAGE } from "@/lib/settings";
 import { Prisma, Subject, Teacher } from "@prisma/client";
 import Image from "next/image";
-import { auth } from "@clerk/nextjs/server";
+// import { auth } from "@clerk/nextjs/server";
 
 type SubjectList = Subject & { teachers: Teacher[] };
 
@@ -15,8 +16,8 @@ const SubjectListPage = async ({
 }: {
   searchParams: { [key: string]: string | undefined };
 }) => {
-  const { sessionClaims } = auth();
-  const role = (sessionClaims?.metadata as { role?: string })?.role;
+  // const { sessionClaims } = auth();
+  // const role = (sessionClaims?.metadata as { role?: string })?.role;
 
   const columns = [
     {
@@ -46,10 +47,11 @@ const SubjectListPage = async ({
       <td>
         <div className="flex items-center gap-2">
           {role === "admin" && (
-            <>
-              <FormContainer table="subject" type="update" data={item} />
-              <FormContainer table="subject" type="delete" id={item.id} />
-            </>
+            // <>
+            //   <FormContainer table="subject" type="update" data={item} />
+            //   <FormContainer table="subject" type="delete" id={item.id} />
+            // </>
+            <div>a</div>
           )}
         </div>
       </td>
@@ -82,10 +84,10 @@ const SubjectListPage = async ({
     prisma.subject.findMany({
       where: query,
       include: {
-        teachers: true,
+        teacher: true,
       },
-      take: ITEM_PER_PAGE,
-      skip: ITEM_PER_PAGE * (p - 1),
+      take: ITEMS_PER_PAGE,
+      skip: ITEMS_PER_PAGE * (p - 1),
     }),
     prisma.subject.count({ where: query }),
   ]);
@@ -105,7 +107,8 @@ const SubjectListPage = async ({
               <Image src="/sort.png" alt="" width={14} height={14} />
             </button>
             {role === "admin" && (
-              <FormContainer table="subject" type="create" />
+              // <FormContainer table="subject" type="create" />
+              <div>a</div>
             )}
           </div>
         </div>
