@@ -10,6 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 type StudentList = Student & { class: Class };
+
 const columns = [
   {
     header: "Info",
@@ -65,7 +66,7 @@ const renderRow = (item: StudentList) => (
     <td className="hidden md:table-cell">{item.address}</td>
     <td>
       <div className="flex items-center gap-2">
-        <Link href={`/list/teachers/${item.id}`}>
+        <Link href={`/list/students/${item.id}`}>
           <button className="w-7 h-7 flex items-center justify-center rounded-full bg-lamaSky">
             <Image src="/view.png" alt="" width={16} height={16} />
           </button>
