@@ -4,6 +4,7 @@ import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
 import { assignmentsData, role } from "@/lib/data";
 import Image from "next/image";
+import React from "react";
 
 type Assignment = {
   id: number;
