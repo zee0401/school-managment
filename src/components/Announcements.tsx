@@ -7,6 +7,7 @@ import { ITEMS_PER_PAGE } from "@/lib/settings";
 import { Announcement, Class, Prisma } from "@prisma/client";
 import Image from "next/image";
 import { auth } from "@clerk/nextjs/server";
+import React from "react";
 
 type AnnouncementList = Announcement & { class: Class };
 const AnnouncementListPage = async ({
