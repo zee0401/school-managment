@@ -1,7 +1,11 @@
 import Image from "next/image";
 import React from "react";
 
-const UserCards = ({ type }: { type: string }) => {
+const UserCards = async ({
+  type,
+}: {
+  type: "admin" | "teacher" | "student" | "Parent";
+}) => {
   return (
     <div className="rounded-2xl odd:bg-lamaPurple even:bg-lamaYellow p-4 flex-1 min-w-[130px]">
       <div className="flex justify-between items-center">
