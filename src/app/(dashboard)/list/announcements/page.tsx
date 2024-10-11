@@ -1,14 +1,13 @@
-// import FormContainer from "@/components/FormContainer";
+import FormContainer from "@/components/FormContainer";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
-import { role } from "@/lib/data";
 import prisma from "@/lib/prisma";
 import { ITEMS_PER_PAGE } from "@/lib/settings";
 import { Announcement, Class, Prisma } from "@prisma/client";
 import Image from "next/image";
 import React from "react";
-// import { auth } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
 
 type AnnouncementList = Announcement & { class: Class };
 const AnnouncementListPage = async ({
@@ -16,9 +15,9 @@ const AnnouncementListPage = async ({
 }: {
   searchParams: { [key: string]: string | undefined };
 }) => {
-  //   const { userId, sessionClaims } = auth();
-  //   const role = (sessionClaims?.metadata as { role?: string })?.role;
-  //   const currentUserId = userId;
+  const { userId, sessionClaims } = auth();
+  const role = (sessionClaims?.metadata as { role?: string })?.role;
+  const currentUserId = userId;
 
   const columns = [
     {
@@ -58,9 +57,8 @@ const AnnouncementListPage = async ({
         <div className="flex items-center gap-2">
           {role === "admin" && (
             <>
-              {/* <FormContainer table="announcement" type="update" data={item} />
-              <FormContainer table="announcement" type="delete" id={item.id} /> */}
-              <div>a</div>
+              <FormContainer table="announcement" type="update" data={item} />
+              <FormContainer table="announcement" type="delete" id={item.id} />
             </>
           )}
         </div>
@@ -91,18 +89,18 @@ const AnnouncementListPage = async ({
 
   // ROLE CONDITIONS
 
-  //   const roleConditions = {
-  //     teacher: { lessons: { some: { teacherId: currentUserId! } } },
-  //     student: { students: { some: { id: currentUserId! } } },
-  //     parent: { students: { some: { parentId: currentUserId! } } },
-  //   };
+  const roleConditions = {
+    teacher: { lessons: { some: { teacherId: currentUserId! } } },
+    student: { students: { some: { id: currentUserId! } } },
+    parent: { students: { some: { parentId: currentUserId! } } },
+  };
 
-  //   query.OR = [
-  //     { classId: null },
-  //     {
-  //       class: roleConditions[role as keyof typeof roleConditions] || {},
-  //     },
-  //   ];
+  query.OR = [
+    { classId: null },
+    {
+      class: roleConditions[role as keyof typeof roleConditions] || {},
+    },
+  ];
 
   const [data, count] = await prisma.$transaction([
     prisma.announcement.findMany({
@@ -133,8 +131,7 @@ const AnnouncementListPage = async ({
               <Image src="/sort.png" alt="" width={14} height={14} />
             </button>
             {role === "admin" && (
-              //   <FormContainer table="announcement" type="create" />
-              <div>a</div>
+              <FormContainer table="announcement" type="create" />
             )}
           </div>
         </div>
