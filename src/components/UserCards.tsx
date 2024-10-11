@@ -4,7 +4,7 @@ import React from "react";
 const UserCards = async ({
   type,
 }: {
-  type: "admin" | "teacher" | "student" | "Parent";
+  type: "admin" | "teacher" | "student" | "parent";
 }) => {
   return (
     <div className="rounded-2xl odd:bg-lamaPurple even:bg-lamaYellow p-4 flex-1 min-w-[130px]">
