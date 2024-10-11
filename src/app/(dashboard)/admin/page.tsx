@@ -1,37 +1,45 @@
 import Announcements from "@/components/Announcements";
-import AttendanceChart from "@/components/Chart-Graph/AttendenceChart";
-import CountChart from "@/components/Chart-Graph/CountChart";
+import AttendanceChartContainer from "@/components/AttendanceChartContainer";
+import CountChartContainer from "@/components/CountChartContainer";
+import EventCalendarContainer from "@/components/EventCalenderContainer";
 import FinanceChart from "@/components/Chart-Graph/FinanceChart";
-import EventCalendar from "@/components/EventCalender";
-import UserCards from "@/components/UserCards";
+import UserCard from "@/components/UserCards";
 
-const AdminPage = () => {
+const AdminPage = ({
+  searchParams,
+}: {
+  searchParams: { [keys: string]: string | undefined };
+}) => {
   return (
-    <div className="flex flex-col md:flex-row gap-4 p-4">
-      {/* Left */}
-      <div className="w-full lg:w-[75%] md:w-[80%] flex flex-col gap-8">
-        <div className="flex gap-4 justify-between flex-wrap-reverse">
-          <UserCards type="admin" />
-          <UserCards type="teacher" />
-          <UserCards type="student" />
-          <UserCards type="Parent" />
+    <div className="p-4 flex gap-4 flex-col md:flex-row">
+      {/* LEFT */}
+      <div className="w-full lg:w-2/3 flex flex-col gap-8">
+        {/* USER CARDS */}
+        <div className="flex gap-4 justify-between flex-wrap">
+          <UserCard type="admin" />
+          <UserCard type="teacher" />
+          <UserCard type="student" />
+          <UserCard type="parent" />
         </div>
-        <div className="flex flex-col lg:flex-row gap-4">
+        {/* MIDDLE CHARTS */}
+        <div className="flex gap-4 flex-col lg:flex-row">
+          {/* COUNT CHART */}
           <div className="w-full lg:w-1/3 h-[450px]">
-            <CountChart />
+            <CountChartContainer />
           </div>
+          {/* ATTENDANCE CHART */}
           <div className="w-full lg:w-2/3 h-[450px]">
-            <AttendanceChart />
+            <AttendanceChartContainer />
           </div>
-          <div className="w-full h-[500px]">
-            <FinanceChart />
-          </div>
+        </div>
+        {/* BOTTOM CHART */}
+        <div className="w-full h-[500px]">
+          <FinanceChart />
         </div>
       </div>
-
-      {/* Right */}
-      <div className="w-full  lg:w-[25%] md:w-[30%]">
-        <EventCalendar />
+      {/* RIGHT */}
+      <div className="w-full lg:w-1/3 flex flex-col gap-8">
+        <EventCalendarContainer searchParams={searchParams} />
         <Announcements />
       </div>
     </div>
