@@ -4,7 +4,7 @@ import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
 
 import prisma from "@/lib/prisma";
-import { ITEM_PER_PAGE } from "@/lib/settings";
+import { ITEMS_PER_PAGE } from "@/lib/settings";
 import { Class, Prisma, Student } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
@@ -59,7 +59,7 @@ const StudentListPage = async ({
   const renderRow = (item: StudentList) => (
     <tr
       key={item.id}
-      className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-lamaPurpleLight"
+      className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-ZeePurpleLight"
     >
       <td className="flex items-center gap-4 p-4">
         <Image
@@ -81,12 +81,12 @@ const StudentListPage = async ({
       <td>
         <div className="flex items-center gap-2">
           <Link href={`/list/students/${item.id}`}>
-            <button className="w-7 h-7 flex items-center justify-center rounded-full bg-lamaSky">
+            <button className="w-7 h-7 flex items-center justify-center rounded-full bg-ZeeSky">
               <Image src="/view.png" alt="" width={16} height={16} />
             </button>
           </Link>
           {role === "admin" && (
-            // <button className="w-7 h-7 flex items-center justify-center rounded-full bg-lamaPurple">
+            // <button className="w-7 h-7 flex items-center justify-center rounded-full bg-ZeePurple">
             //   <Image src="/delete.png" alt="" width={16} height={16} />
             // </button>
             <FormContainer table="student" type="delete" id={item.id} />
@@ -133,8 +133,8 @@ const StudentListPage = async ({
       include: {
         class: true,
       },
-      take: ITEM_PER_PAGE,
-      skip: ITEM_PER_PAGE * (p - 1),
+      take: ITEMS_PER_PAGE,
+      skip: ITEMS_PER_PAGE * (p - 1),
     }),
     prisma.student.count({ where: query }),
   ]);
@@ -147,14 +147,14 @@ const StudentListPage = async ({
         <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
           <TableSearch />
           <div className="flex items-center gap-4 self-end">
-            <button className="w-8 h-8 flex items-center justify-center rounded-full bg-lamaYellow">
+            <button className="w-8 h-8 flex items-center justify-center rounded-full bg-ZeeYellow">
               <Image src="/filter.png" alt="" width={14} height={14} />
             </button>
-            <button className="w-8 h-8 flex items-center justify-center rounded-full bg-lamaYellow">
+            <button className="w-8 h-8 flex items-center justify-center rounded-full bg-ZeeYellow">
               <Image src="/sort.png" alt="" width={14} height={14} />
             </button>
             {role === "admin" && (
-              // <button className="w-8 h-8 flex items-center justify-center rounded-full bg-lamaYellow">
+              // <button className="w-8 h-8 flex items-center justify-center rounded-full bg-ZeeYellow">
               //   <Image src="/plus.png" alt="" width={14} height={14} />
               // </button>
               <FormContainer table="student" type="create" />

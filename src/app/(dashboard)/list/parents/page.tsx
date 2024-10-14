@@ -1,14 +1,13 @@
-// import FormContainer from "@/components/FormContainer";
+import FormContainer from "@/components/FormContainer";
 import Pagination from "@/components/Pagination";
 import Table from "@/components/Table";
 import TableSearch from "@/components/TableSearch";
-import { role } from "@/lib/data";
 import prisma from "@/lib/prisma";
 import { ITEMS_PER_PAGE } from "@/lib/settings";
 import { Parent, Prisma, Student } from "@prisma/client";
 import Image from "next/image";
 
-// import { auth } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
 
 type ParentList = Parent & { students: Student[] };
 
@@ -17,8 +16,8 @@ const ParentListPage = async ({
 }: {
   searchParams: { [key: string]: string | undefined };
 }) => {
-  // const { sessionClaims } = auth();
-  // const role = (sessionClaims?.metadata as { role?: string })?.role;
+  const { sessionClaims } = auth();
+  const role = (sessionClaims?.metadata as { role?: string })?.role;
 
   const columns = [
     {
@@ -53,7 +52,7 @@ const ParentListPage = async ({
   const renderRow = (item: ParentList) => (
     <tr
       key={item.id}
-      className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-lamaPurpleLight"
+      className="border-b border-gray-200 even:bg-slate-50 text-sm hover:bg-ZeePurpleLight"
     >
       <td className="flex items-center gap-4 p-4">
         <div className="flex flex-col">
@@ -70,9 +69,8 @@ const ParentListPage = async ({
         <div className="flex items-center gap-2">
           {role === "admin" && (
             <>
-              {/* <FormContainer table="parent" type="update" data={item} />
-              <FormContainer table="parent" type="delete" id={item.id} /> */}
-              <div>a</div>
+              <FormContainer table="parent" type="update" data={item} />
+              <FormContainer table="parent" type="delete" id={item.id} />
             </>
           )}
         </div>
@@ -122,16 +120,13 @@ const ParentListPage = async ({
         <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
           <TableSearch />
           <div className="flex items-center gap-4 self-end">
-            <button className="w-8 h-8 flex items-center justify-center rounded-full bg-lamaYellow">
+            <button className="w-8 h-8 flex items-center justify-center rounded-full bg-ZeeYellow">
               <Image src="/filter.png" alt="" width={14} height={14} />
             </button>
-            <button className="w-8 h-8 flex items-center justify-center rounded-full bg-lamaYellow">
+            <button className="w-8 h-8 flex items-center justify-center rounded-full bg-ZeeYellow">
               <Image src="/sort.png" alt="" width={14} height={14} />
             </button>
-            {role === "admin" && (
-              // <FormContainer table="parent" type="create" />
-              <div>a</div>
-            )}
+            {role === "admin" && <FormContainer table="parent" type="create" />}
           </div>
         </div>
       </div>
