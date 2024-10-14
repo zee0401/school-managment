@@ -2,7 +2,7 @@ import Announcements from "@/components/Announcements";
 import AttendanceChartContainer from "@/components/AttendanceChartContainer";
 import CountChartContainer from "@/components/CountChartContainer";
 import EventCalendarContainer from "@/components/EventCalenderContainer";
-import FinanceChart from "@/components/Chart-Graph/FinanceChart";
+import FinanceChart from "@/components/FinanceChart";
 import UserCard from "@/components/UserCards";
 
 const AdminPage = ({
